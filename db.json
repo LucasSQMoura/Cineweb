@@ -1,0 +1,50 @@
+{
+  "filmes": [
+    {
+      "id": "ef10",
+      "titulo": "Teste",
+      "sinopse": "adasdasdasdasdadaadasdasdas",
+      "classificacao": "18",
+      "duracao": 120,
+      "genero": "Ação"
+    }
+  ],
+  "salas": [
+    {
+      "id": "2397",
+      "numero": 10,
+      "capacidade": 50
+    }
+  ],
+  "sessoes": [
+    {
+      "id": "7b1e",
+      "filmeId": "ef10",
+      "salaId": "2397",
+      "dataHora": "2025-12-10T10:30"
+    }
+  ],
+  "ingressos": [
+    {
+      "id": "8b55",
+      "sessaoId": "7b1e",
+      "tipo": "INTEIRA",
+      "valor": 60
+    },
+    {
+      "id": "5a1e",
+      "sessaoId": "7b1e",
+      "tipo": "MEIA",
+      "valor": 30
+    }
+  ],
+  "lanches": [
+    {
+      "id": "f6d4",
+      "nome": "Pipoca G",
+      "descricao": "Pipoca G + Refri 2l",
+      "valor": 50,
+      "qtUnidade": 2
+    }
+  ]
+}
