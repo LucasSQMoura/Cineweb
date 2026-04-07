@@ -1,43 +1,86 @@
 import { z } from 'zod';
 
+//
+// 🎬 FILME
+//
 export const filmeSchema = z.object({
   titulo: z.string().min(1, "Título é obrigatório"),
-  sinopse: z.string().min(10, "Sinopse deve ter no mínimo 10 caracteres"),
-  classificacao: z.string().min(1, "Classificação é obrigatória"),
   duracao: z.coerce.number().positive("Duração deve ser maior que 0"),
-  genero: z.string().min(1, "Gênero é obrigatório")
+  classificacaoEtaria: z.string().min(1, "Classificação é obrigatória"),
+  generoId: z.coerce.number()
 });
 
+//
+// 🏢 SALA
+//
 export const salaSchema = z.object({
-  numero: z.coerce.number().int().positive("Número deve ser positivo"),
-  capacidade: z.coerce.number().int().positive("Capacidade deve ser positiva")
+  numero: z.string().min(1),
+  capacidade: z.coerce.number().positive()
 });
 
+//
+// 🎟️ SESSÃO
+//
 export const sessaoSchema = z.object({
-  filmeId: z.string().min(1, "Selecione um filme"),
-  salaId: z.string().min(1, "Selecione uma sala"),
-  dataHora: z.string().refine((val) => new Date(val) >= new Date(), {
-    message: "A data da sessão não pode ser retroativa"
-  })
+  filmeId: z.number(),
+  salaId: z.number(),
+  data: z.string(),
+  valorIngresso: z.number()
 });
 
+//
+// 🍔 LANCHE
+//
 export const lancheSchema = z.object({
-  nome: z.string().min(1, "Nome é obrigatório"),
-  descricao: z.string().optional(),
-  valor: z.coerce.number().positive("Valor deve ser positivo"),
-  qtUnidade: z.coerce.number().int().positive("Qtd deve ser positiva")
+  nome: z.string().min(1),
+  descricao: z.string().min(1),
+  preco: z.coerce.number().positive()
 });
 
+//
+// 🧠 TYPES
+//
+export type Filme = {
+  id: number;
+  titulo: string;
+  duracao: number;
+  generoId: number;
+  classificacaoEtaria: string;
+};
 
-export type Filme = z.infer<typeof filmeSchema> & { id: string };
-export type Sala = z.infer<typeof salaSchema> & { id: string };
-export type Sessao = z.infer<typeof sessaoSchema> & { id: string };
-export type Lanche = z.infer<typeof lancheSchema> & { id: string };
+export type Genero = {
+  id: number;
+  nome: string;
+};
+
+export type Sala = {
+  id: number;
+  numero: string;
+  capacidade: number;
+};
+
+export type Sessao = {
+  id: number;
+  data: string;
+  valorIngresso: number;
+
+  filmeId: number;
+  salaId: number;
+
+  filme?: Filme;
+  sala?: Sala;
+};
+
+export type Lanche = {
+  id: number;
+  nome: string;
+  descricao: string;
+  preco: number;
+};
+
 export type Ingresso = {
-  valorInteira(arg0: string, valorInteira: any): unknown;
-  valorMeia(arg0: string, valorMeia: any): unknown;
-  id: string;
-  sessaoId: string;
+  id: number;
+  sessaoId: number;
   tipo: 'INTEIRA' | 'MEIA';
-  valor: number;
+  valorPago: number;
 };
